@@ -17,23 +17,23 @@
 }
 
 .first {
-    background-color: #833;   
+    background-color: red;   
     border-top-left-radius: 50%;
 }
 
 
 .second {
-    background-color: #383;
+    background-color: green;
     border-top-right-radius: 50%;
 }
 
 .third {
-    background-color: #338;
+    background-color: lightblue;
     border-bottom-left-radius: 50%;
 }
 
 .fourth {
-    background-color: #989;
+    background-color: yellow;
     border-bottom-right-radius: 50%;
 }
 

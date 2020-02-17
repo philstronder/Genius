@@ -2,20 +2,19 @@ import React from 'react';
 import { directive } from '@babel/types';
 import './Board.css'
 import $ from 'jquery';
-
 import { useEffect } from 'react';
 
 
 
 export default function Board() {
     useEffect(() => {
-        alert('effect')
+        
         $('.container').click((e) => {
             //Visually shows that the element is active
             e.target.classList.add('active');
             setTimeout(() => {
                 e.target.classList.remove('active');
-            }, 1000);
+            }, 500);
 
             //Plays key audio
             let audio;
