@@ -6,12 +6,12 @@
     justify-content: center;
     flex-direction: row;
     flex-wrap: wrap;
+    align-content: center;
 }
 
 .button {
     height: 80px;
     width: 50px;
-    background-color: #383;
     padding: 50px;
     margin: 10px;
 }
@@ -20,7 +20,6 @@
     background-color: red;   
     border-top-left-radius: 50%;
 }
-
 
 .second {
     background-color: green;
@@ -39,4 +38,26 @@
 
 .active {
     background-color: #fff;
+}
+
+.gameOver {
+    color: red;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: absolute;
+    margin-top: 50%;
+    background-color: white;
+    padding: 20px;
+    display: none;
+}
+
+.prepare {
+    color: green;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: absolute;
+    margin-top: 50%;
+    background-color: white;
+    padding: 20px;
+    display: none;
 }
