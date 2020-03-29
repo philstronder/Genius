@@ -3,6 +3,7 @@ import classes from './Board.module.css'
 import Button from '../UI/Button/Button'
 import $ from 'jquery';
 import { useEffect } from 'react';
+import Score from '../Score/Score';
 
 
 
@@ -24,14 +25,16 @@ export default function Board() {
 
     const populateSequenceArray = (pos) => {
         arrSequence[pos] = getRandomInt(1, 4);  
-        console.log(arrSequence);
     }
 
     const readSequence = async () => {
+        let el;
         for(var i = 0; i <= arrSequence.length; i++) {
-            $('#btn' + arrSequence[i]).addClass(classes.active);   
+            el = $('#btn' + arrSequence[i])
+            el.addClass(classes.active);   
+            playAudio(el);
             await sleep(500);
-            $('#btn' + arrSequence[i]).removeClass(classes.active);    
+            el.removeClass(classes.active);    
             await sleep(300);
         }
     }
@@ -65,39 +68,39 @@ export default function Board() {
                 }, 500);               
             }
             
-           playAudio(e.target);
+           playAudio($(e.target));
 
             //Check if pressed button is correct
-            checkButton(e.target);
+            checkButton($(e.target));
         });
     });
 
     function playAudio(el) {
         let audio;
-        if(el.classList.contains(classes.first)) {
-            audio = new Audio('button1.mp3');
-            //audio.play();
-        } else if (el.classList.contains(classes.second)){
-            audio = new Audio('button2.mp3');
-            //audio.play();
-        } else if (el.classList.contains(classes.third)) {
-            audio = new Audio('button3.mp3');
-            //audio.play();
-        } else if (el.classList.contains(classes.fourth)) {
-            audio = new Audio('button4.mp3');
-            //audio.play();
+        if(el.hasClass(classes.first)) {
+            audio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3');
+            audio.play();
+        } else if (el.hasClass(classes.second)){
+            audio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3');
+            audio.play();
+        } else if (el.hasClass(classes.third)) {
+            audio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3');
+            audio.play();
+        } else if (el.hasClass(classes.fourth)) {
+            audio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3');
+            audio.play();
         }
     }
 
     const checkButton = async (el) => {
         let pressedButton;
-        if(el.classList.contains(classes.first)) {
+        if(el.hasClass(classes.first)) {
             pressedButton = 1;
-        } else if (el.classList.contains(classes.second)){
+        } else if (el.hasClass(classes.second)){
             pressedButton = 2;
-        } else if (el.classList.contains(classes.third)) {
+        } else if (el.hasClass(classes.third)) {
             pressedButton = 3;
-        } else if (el.classList.contains(classes.fourth)) {
+        } else if (el.hasClass(classes.fourth)) {
             pressedButton = 4;
         }  else {
             return;
@@ -106,7 +109,6 @@ export default function Board() {
         if(arrSequence[currentPressedIndex] == pressedButton){
             //If reached end of sequence
             if(currentPressedIndex + 1 == arrSequence.length) {
-                console.log('ok');
 
                 //Restart the pressed sequence
                 currentPressedIndex = 0;
@@ -121,6 +123,8 @@ export default function Board() {
                 
             } else {
                 currentPressedIndex++;
+
+                //TODO: Increase score
             }
         } else {
             gameOver();
@@ -139,6 +143,7 @@ export default function Board() {
 
     return(
         <>
+            <Score/>
             <div className={classes.container}>
                 <div className={classBtn1} id='btn1'></div>
                 <div className={classBtn2} id='btn2'></div>
@@ -147,8 +152,7 @@ export default function Board() {
                 <div className={classes.gameOver}>GAME OVER</div>
                 <div className={classes.prepare}>PREPARE</div>
             </div>
-            <Button click={startClickHandler} title='Start' type='Start'/>
-            
+            <Button click={startClickHandler} title='Start' type='Start'/>  
         </>
     );
 }

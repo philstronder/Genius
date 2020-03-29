@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.score {
+    font-size: 1.3em;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.record {
+    color: coral;
+    font-size: 1.3em;
+    padding: 10px;
+    font-weight: bold;
+}

@@ -27,12 +27,12 @@
 }
 
 .third {
-    background-color: lightblue;
+    background-color: blue;
     border-bottom-left-radius: 50%;
 }
 
 .fourth {
-    background-color: yellow;
+    background-color: darkgoldenrod;
     border-bottom-right-radius: 50%;
 }
 
