@@ -5,12 +5,16 @@
 
 .score {
     font-size: 1.3em;
+    font-style: italic;
     padding: 10px;
     font-weight: bold;
+    color: #9a1212;
+    text-shadow: 0 0 2px red;
 }
 
 .record {
-    color: coral;
+    color:rgba(254, 142, 5, 0.906);
+    text-shadow: 0 0 2px coral, 0 0 2px black;
     font-size: 1.3em;
     padding: 10px;
     font-weight: bold;

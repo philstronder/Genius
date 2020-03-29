@@ -1,21 +1,30 @@
 .container {
-    padding: 10px;
+
 }
 
 .button {
-    padding: 10px;
-    height: 50px;
-    width: 80px;
-    background-color: #882;
-    font-family: 'Courier New', Courier, monospace;
+    padding-left: 140px;
+    padding-right: 140px;
+    height: 30px;
+    background-color: rgb(72, 171, 79);
+    font-family: Oswald;
+    letter-spacing: 2px;
+    
     font-weight: bolder;
     font-size: 1em;
     text-transform: uppercase;
     color: #fff;
     border-radius: 20px;
     outline: 0;
+    margin-top: 20px;
+    margin-left: 18px;
 }
 
 .button:hover {
-    background-color: #A82;
+    background-color: rgb(70, 193, 30);
+}
+
+@font-face {
+      font-family: Oswald;
+      src: url('./Oswald-VariableFont_wght.ttf');  
 }
