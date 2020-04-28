@@ -1,8 +1,7 @@
 import React from 'react';
 import classes from './Board.module.css'
 import Button from '../UI/Button/Button'
-import $ from 'jquery';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import {useDispatch} from 'react-redux';
 
 
@@ -10,6 +9,13 @@ export default function Board() {
     let arrSequence = [];
     let currentPressedIndex = 0;
     const dispatch = useDispatch();
+
+    const btn1 = useRef(null);
+    const btn2 = useRef(null);
+    const btn3 = useRef(null);
+    const btn4 = useRef(null);
+    const gameOver = useRef(null);
+    const prepare = useRef(null);
 
     function sleep(ms) {
         return new Promise(resolver => {
@@ -28,68 +34,93 @@ export default function Board() {
     }
 
     const readSequence = async () => {
-        let el;
         for(var i = 0; i <= arrSequence.length; i++) {
-            el = $('#btn' + arrSequence[i])
-            el.addClass(classes.active);   
-            playAudio(el);
-            await sleep(500);
-            el.removeClass(classes.active);    
-            await sleep(300);
+            let el;
+
+            switch(arrSequence[i]) {
+                case 1:
+                    el = btn1.current;
+                    break;
+                case 2:
+                    el = btn2.current;
+                    break;
+                case 3:
+                    el = btn3.current;
+                    break;
+                case 4:
+                    el = btn4.current;
+                    break;
+            }
+
+            if(!!el) {
+                el.classList.add(classes.active);   
+                playAudio(el);
+                await sleep(200);
+                el.classList.remove(classes.active);    
+                await sleep(150);
+            }
         }
     }
 
     const resetAllButtons = () => {
-        $('.' + classes.button).removeClass('active');
+        const buttons = document.getElementsByClassName(classes.button);
+        
+        Array.from(buttons).forEach(item => {
+            item.classList.remove('active');
+        });
     }
 
     async function startClickHandler() {
         dispatch({type: 'RESTART'});
         resetAllButtons();
-        $('.' + classes.gameOver).hide();
+        gameOver.current.setAttribute('style', 'display: none;');
         arrSequence = [];
         populateSequenceArray(0);
         currentPressedIndex = 0;
 
-        $('.' + classes.prepare).show();
+        prepare.current.setAttribute('style', 'display: inline;');
         await sleep(1200);
-        $('.' + classes.prepare).hide();
+        prepare.current.setAttribute('style', 'display: none;');
         await sleep(500);
         readSequence();
     }
 
     useEffect(() => {
         //dispatch({type: 'RESTART'});
-        $('.' + classes.gameOver).hide();
+        gameOver.current.setAttribute('style', 'display: none;');
+        
         //Click handler
-        $('.' + classes.container).click((e) => {
-            if(e.target.classList.contains(classes.button)) {
-                //Visually shows that the element is active
-                e.target.classList.add(classes.active);
-                setTimeout(() => {
-                    e.target.classList.remove(classes.active);
-                }, 500);               
-            }
-            
-            playAudio($(e.target));
-
-            //Check if pressed button is correct
-            checkButton($(e.target));
-        });
+        const container = document.getElementsByClassName(classes.container);
+        Array.from(container).forEach(item => {
+            item.addEventListener('click', (e) => {
+                if(e.target.classList.contains(classes.button)) {
+                    //Visually shows that the element is active
+                    e.target.classList.add(classes.active);
+                    setTimeout(() => {
+                        e.target.classList.remove(classes.active);
+                    }, 500);               
+                }
+                
+                playAudio(e.target);
+    
+                //Check if pressed button is correct
+                checkButton(e.target);
+            })
+        })
     });
 
     function playAudio(el) {
         let audio;
-        if(el.hasClass(classes.first)) {
+        if(el.classList.contains(classes.first)) {
             audio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3');
             audio.play();
-        } else if (el.hasClass(classes.second)){
+        } else if (el.classList.contains(classes.second)){
             audio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3');
             audio.play();
-        } else if (el.hasClass(classes.third)) {
+        } else if (el.classList.contains(classes.third)) {
             audio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3');
             audio.play();
-        } else if (el.hasClass(classes.fourth)) {
+        } else if (el.classList.contains(classes.fourth)) {
             audio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3');
             audio.play();
         }
@@ -98,20 +129,17 @@ export default function Board() {
     const checkButton = async (el) => {
         let pressedButton;
 
-        if(el.hasClass(classes.first)) {
+        if(el.classList.contains(classes.first)) {
             pressedButton = 1;
-        } else if (el.hasClass(classes.second)){
+        } else if (el.classList.contains(classes.second)){
             pressedButton = 2;
-        } else if (el.hasClass(classes.third)) {
+        } else if (el.classList.contains(classes.third)) {
             pressedButton = 3;
-        } else if (el.hasClass(classes.fourth)) {
+        } else if (el.classList.contains(classes.fourth)) {
             pressedButton = 4;
         }  else {
             return;
         }
-
-        console.log(arrSequence);
-        console.log(pressedButton);
 
         if(arrSequence[currentPressedIndex] === pressedButton) {
             //If reached end of sequence
@@ -135,13 +163,13 @@ export default function Board() {
                 currentPressedIndex++;
             }
         } else {
-            gameOver();
+            showGameOver();
         }
     }
 
-    const gameOver = async () => {
+    const showGameOver = async () => {
         await sleep(300);
-        $('.' + classes.gameOver).show();
+        gameOver.current.setAttribute('style', 'display: inline;');
         arrSequence = [];
     }
 
@@ -153,12 +181,12 @@ export default function Board() {
     return(
         <>
             <div className={classes.container}>
-                <div className={classBtn1} id='btn1'></div>
-                <div className={classBtn2} id='btn2'></div>
-                <div className={classBtn3} id='btn3'></div>
-                <div className={classBtn4} id='btn4'></div>
-                <div className={classes.gameOver}>GAME OVER</div>
-                <div className={classes.prepare}>PREPARE</div>
+                <div className={classBtn1} ref={btn1}></div>
+                <div className={classBtn2} ref={btn2}></div>
+                <div className={classBtn3} ref={btn3}></div>
+                <div className={classBtn4} ref={btn4}></div>
+                <div className={classes.gameOver} ref={gameOver}>GAME OVER</div>
+                <div className={classes.prepare} ref={prepare}>PREPARE</div>
             </div>
 
             <Button click={startClickHandler} title='Start' type='Start'/>  
