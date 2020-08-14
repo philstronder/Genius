@@ -1,0 +1,23 @@
+.Menu {
+    background-color: rgba(60, 60, 60, 0.8);
+    font-weight: 700;
+    display: flex;
+    justify-content: space-around;
+    padding:  0;
+    min-width: 360px;
+    height: 40px;
+}
+
+a {
+    padding: 0;
+    text-decoration: none;
+    color: #eee;
+    display: flex;
+    align-items: center;
+    height: 40px;
+}
+
+a:hover, 
+.active {
+    border-bottom: 3px solid #222;
+}

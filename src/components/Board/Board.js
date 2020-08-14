@@ -50,6 +50,8 @@ export default function Board() {
                 case 4:
                     el = btn4.current;
                     break;
+                default:
+                    break;
             }
 
             if(!!el) {
@@ -86,7 +88,6 @@ export default function Board() {
     }
 
     useEffect(() => {
-        //dispatch({type: 'RESTART'});
         gameOver.current.setAttribute('style', 'display: none;');
         
         //Click handler
@@ -105,9 +106,9 @@ export default function Board() {
     
                 //Check if pressed button is correct
                 checkButton(e.target);
-            })
-        })
-    });
+            });
+        });
+    }, []);
 
     function playAudio(el) {
         let audio;
@@ -181,15 +182,17 @@ export default function Board() {
     return(
         <>
             <div className={classes.container}>
-                <div className={classBtn1} ref={btn1}></div>
-                <div className={classBtn2} ref={btn2}></div>
-                <div className={classBtn3} ref={btn3}></div>
-                <div className={classBtn4} ref={btn4}></div>
-                <div className={classes.gameOver} ref={gameOver}>GAME OVER</div>
-                <div className={classes.prepare} ref={prepare}>PREPARE</div>
-            </div>
+                <div className={classes.board}>
+                    <div className={classBtn1} ref={btn1}></div>
+                    <div className={classBtn2} ref={btn2}></div>
+                    <div className={classBtn3} ref={btn3}></div>
+                    <div className={classBtn4} ref={btn4}></div>
+                    <div className={classes.gameOver} ref={gameOver}>GAME OVER</div>
+                    <div className={classes.prepare} ref={prepare}>PREPARE</div>
+                </div>
 
-            <Button click={startClickHandler} title='Start' type='Start'/>  
+                <Button click={startClickHandler} title='Start' type='Start'/>  
+            </div>
         </>
     );
 }

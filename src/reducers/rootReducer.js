@@ -2,12 +2,12 @@ const initialState = {
     counter: 0
 }
 
-function rootReducer(state = initialState, action) {
+const rootReducer = (state = initialState, action) => {
     switch(action.type) {
         case 'INCREMENT':
-            return {counter: state.counter + 1}
-        case 'RESTART':
-            return {counter: 0}
+            return {...state, counter: state.counter + 1};
+        case 'DECREMENT':
+            return {...state, counter: state.counter - 1};
         default:
             return state;
     }

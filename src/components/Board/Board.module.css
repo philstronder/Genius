@@ -1,39 +1,49 @@
 .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    border-radius: 100%;
+}
+
+.board {
     background-color: #333;
-    height: 420px;
-    width: 360px;
+    height: 330px;
+    width: 320px;
     display: flex;
     justify-content: center;
     flex-direction: row;
     flex-wrap: wrap;
     align-content: center;
+    
 }
 
 .button {
-    height: 80px;
-    width: 50px;
+    height: 30px;
+    width: 30px;
     padding: 50px;
-    margin: 10px;
+    margin: 5px;
+    cursor: pointer;
 }
 
 .first {
     background-color: red;   
-    border-top-left-radius: 50%;
+    border-top-left-radius: 100%;
 }
 
 .second {
     background-color: green;
-    border-top-right-radius: 50%;
+    border-top-right-radius: 100%;
 }
 
 .third {
     background-color: blue;
-    border-bottom-left-radius: 50%;
+    border-bottom-left-radius: 100%;
 }
 
 .fourth {
     background-color: darkgoldenrod;
-    border-bottom-right-radius: 50%;
+    border-bottom-right-radius: 100%;
 }
 
 .active {
